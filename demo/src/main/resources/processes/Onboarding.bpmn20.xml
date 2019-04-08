@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
+  <process id="onboarding" name="Onboarding" isExecutable="true">
+    <startEvent id="startEvent" name="Start"></startEvent>
+    <userTask id="usertask1" name="Enter Data" activiti:candidateGroups="managers">
+      <extensionElements>
+        <activiti:formProperty id="fullName" name="Full Name" type="string"></activiti:formProperty>
+        <activiti:formProperty id="yearsOfExperience" name="Years Of Experience" type="long"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <exclusiveGateway id="decision" name="Exclusive Gateway" default="automatedIntroPath"></exclusiveGateway>
+    <userTask id="personalIntro" name="Personal introduction and data entry" activiti:candidateGroups="managers">
+      <extensionElements>
+        <activiti:formProperty id="personalWelcomeTime" name="Personal Welcome Time" type="date"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <scriptTask id="automatedIntro" name="Generic and automated data entry" scriptFormat="javascript" activiti:autoStoreVariables="false">
+      <script><![CDATA[var dateAsString = new Date().toString();
+execution.setVariable("autoWelcomeTime", dateAsString);]]></script>
+    </scriptTask>
+    <endEvent id="endEvent" name="End"></endEvent>
+    <sequenceFlow id="flow1" sourceRef="startEvent" targetRef="usertask1"></sequenceFlow>
+    <sequenceFlow id="automatedIntroPath" sourceRef="decision" targetRef="automatedIntro"></sequenceFlow>
+    <sequenceFlow id="personalIntroPath" name="Years of experience &gt; 4" sourceRef="decision" targetRef="personalIntro"></sequenceFlow>
+    <sequenceFlow id="flow4" sourceRef="automatedIntro" targetRef="endEvent"></sequenceFlow>
+    <sequenceFlow id="flow3" sourceRef="personalIntro" targetRef="endEvent"></sequenceFlow>
+    <sequenceFlow id="flow2" sourceRef="usertask1" targetRef="decision">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${aproved}]]></conditionExpression>
+    </sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_onboarding">
+    <bpmndi:BPMNPlane bpmnElement="onboarding" id="BPMNPlane_onboarding">
+      <bpmndi:BPMNShape bpmnElement="startEvent" id="BPMNShape_startEvent">
+        <omgdc:Bounds height="30.0" width="30.0" x="170.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="usertask1" id="BPMNShape_usertask1">
+        <omgdc:Bounds height="55.0" width="105.0" x="250.0" y="200.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="decision" id="BPMNShape_decision">
+        <omgdc:Bounds height="40.0" width="40.0" x="400.0" y="208.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="personalIntro" id="BPMNShape_personalIntro">
+        <omgdc:Bounds height="80.0" width="136.0" x="353.0" y="330.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="automatedIntro" id="BPMNShape_automatedIntro">
+        <omgdc:Bounds height="55.0" width="105.0" x="368.0" y="80.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="endEvent" id="BPMNShape_endEvent">
+        <omgdc:Bounds height="28.0" width="28.0" x="620.0" y="210.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="199.99660595085598" y="225.31907672235863"></omgdi:waypoint>
+        <omgdi:waypoint x="250.0" y="226.38297872340425"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="355.0" y="227.72340425531914"></omgdi:waypoint>
+        <omgdi:waypoint x="400.08474576271186" y="227.91525423728814"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="automatedIntroPath" id="BPMNEdge_automatedIntroPath">
+        <omgdi:waypoint x="420.08264462809916" y="208.08264462809916"></omgdi:waypoint>
+        <omgdi:waypoint x="420.38589211618256" y="135.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="489.0" y="369.68518518518516"></omgdi:waypoint>
+        <omgdi:waypoint x="637.0" y="369.0"></omgdi:waypoint>
+        <omgdi:waypoint x="634.2895931971483" y="237.99700452883278"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
+        <omgdi:waypoint x="473.0" y="107.37875288683603"></omgdi:waypoint>
+        <omgdi:waypoint x="637.0" y="107.0"></omgdi:waypoint>
+        <omgdi:waypoint x="634.3588564110958" y="210.00459996726727"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="personalIntroPath" id="BPMNEdge_personalIntroPath">
+        <omgdi:waypoint x="420.13986013986016" y="247.86013986013987"></omgdi:waypoint>
+        <omgdi:waypoint x="420.71830985915494" y="330.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/processdef">
+  <process id="a123456" name="BPM-Test" isExecutable="true">
+    <startEvent id="StartEvent"></startEvent>
+    <userTask id="userInfo" name="User Info" activiti:assignee="$INITIATOR">
+      <extensionElements>
+        <activiti:formProperty id="FullName" name="Full Name" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="City" name="City" type="string" required="true"></activiti:formProperty>
+        <activiti:formProperty id="CC" name="CC" type="string" required="true"></activiti:formProperty>
+        <modeler:activiti-idm-initiator xmlns:modeler="http://activiti.com/modeler"><![CDATA[true]]></modeler:activiti-idm-initiator>
+      </extensionElements>
+    </userTask>
+    <userTask id="SelectProduct" name="Select Product" activiti:candidateGroups="client">
+      <extensionElements>
+        <activiti:formProperty id="Product" name="Product" type="string" required="true"></activiti:formProperty>
+      </extensionElements>
+    </userTask>
+    <endEvent id="EndEvent" name="EndEvent"></endEvent>
+    <sequenceFlow id="flow1" name="flow1" sourceRef="StartEvent" targetRef="userInfo"></sequenceFlow>
+    <sequenceFlow id="flow2" name="flow2" sourceRef="userInfo" targetRef="SelectProduct"></sequenceFlow>
+    <sequenceFlow id="flow3" name="flow3" sourceRef="SelectProduct" targetRef="EndEvent"></sequenceFlow>
+  </process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_a123456">
+    <bpmndi:BPMNPlane bpmnElement="a123456" id="BPMNPlane_a123456">
+      <bpmndi:BPMNShape bpmnElement="StartEvent" id="BPMNShape_StartEvent">
+        <omgdc:Bounds height="30.0" width="30.0" x="75.0" y="100.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="userInfo" id="BPMNShape_userInfo">
+        <omgdc:Bounds height="80.0" width="100.0" x="165.0" y="75.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="SelectProduct" id="BPMNShape_SelectProduct">
+        <omgdc:Bounds height="80.0" width="100.0" x="360.0" y="75.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndEvent" id="BPMNShape_EndEvent">
+        <omgdc:Bounds height="28.0" width="28.0" x="540.0" y="101.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
+        <omgdi:waypoint x="105.0" y="115.0"></omgdi:waypoint>
+        <omgdi:waypoint x="165.0" y="115.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2">
+        <omgdi:waypoint x="265.0" y="115.0"></omgdi:waypoint>
+        <omgdi:waypoint x="360.0" y="115.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
+        <omgdi:waypoint x="460.0" y="115.0"></omgdi:waypoint>
+        <omgdi:waypoint x="540.0" y="115.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</definitions>
